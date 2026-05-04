@@ -12,7 +12,7 @@ bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
 
 # ================== DATABASE ==================
-conn = sqlite3.connect("bot.db", check_same_thread=False)
+conn = sqlite3.connect("/tmp/bot.db", check_same_thread=False)
 cur = conn.cursor()
 
 cur.execute("""
@@ -131,4 +131,12 @@ async def save_order(message: types.Message):
 # ================== BALANCE ==================
 @dp.message(F.text == "💰 Balans")
 async def balance(message: types.Message):
-    add
+    bal = get_balance(message.from_user.id)
+    await message.answer(f"💰 Sizning balansingiz: {bal} so‘m")
+
+
+async def main():
+    await dp.start_polling(bot)
+
+if name == "main":
+    asyncio.run(main())
