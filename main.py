@@ -12,7 +12,7 @@ bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
 
 # ================== DATABASE ==================
-conn = sqlite3.connect("/tmp/bot.db", check_same_thread=False)
+conn = sqlite3.connect("bot.db", check_same_thread=False)
 cur = conn.cursor()
 
 cur.execute("""
@@ -114,8 +114,13 @@ async def my_orders(message: types.Message):
 
     await message.answer(text)
 
-@dp.message(F.text)
-async def save_order(message: types.Message):
+@dp.message(~F.text.in_([
+    "💰 Balans",
+    "🛒 Buyurtmalarim",
+    "📦 Xizmatlar",
+    "👥 Referal",
+    "ℹ️ Bot haqida"
+]))
     if message.text.startswith("/"):
         return
 
